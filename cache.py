@@ -64,6 +64,11 @@ class MyCache(object):
 def dao_cache_wrapper(key, expire_seconds=DAO_CACHE_TIME):
     """
     缓存装饰器，加之，就能自动来一套获取缓存，若缓存不存在则自动添加缓存...
+    
+    经查阅文档，redis的key长度无限制,value<=512MB即可，所以我们拼装起来的key理论上不会触发长度限制问题。
+    1、这是一个策略问题，太短不方便管理、查阅，太长会增加计算成本，个人偏向前者.
+    2、此处的key是有req中的请求参数拼装，理论上是长度有限，不会造成太大的困扰，固不考虑之...
+    
     :param key: 缓存的key
     :param expire_seconds: 超时时间，秒
     :return:
